@@ -2,7 +2,7 @@ let display = document.getElementById('display');
 
 let start;
 let interval;
-let counter = 0;
+let counter;
 
 function millisecondsToHHMMSS(counter) {
   let seconds = Math.floor(counter/1000);
@@ -35,7 +35,6 @@ function stopCounting() {
 }
 
 window.addEventListener('load', _ => {
-  let display = document.getElementById('display');
   if (!navigator.onLine) startCounting();
   window.addEventListener('online', stopCounting);
   window.addEventListener('offline', startCounting);
