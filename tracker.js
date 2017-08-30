@@ -1,6 +1,13 @@
 let display = document.getElementById('display');
+let reset = document.getElementById('reset');
 
-let start;
+function getCookie(name) {
+  return (`; ${document.cookie}`)
+           .split(`; ${name}=`).pop()
+           .split(';').shift();
+}
+
+let start = +(new Date())-getCookie('counter');
 let interval;
 let counter;
 
@@ -21,6 +28,12 @@ function updateTimer() {
   counter = +(new Date())-start;
   let timestamp = millisecondsToHHMMSS(counter);
   display.innerText = timestamp;
+  document.cookie = 'counter='+counter;
+}
+
+function resetCounter() {
+  start = +(new Date());
+  updateTimer();
 }
 
 function startCounting() {
@@ -35,8 +48,10 @@ function stopCounting() {
 }
 
 window.addEventListener('load', _ => {
+  updateTimer();
   if (!navigator.onLine) startCounting();
   window.addEventListener('online', stopCounting);
   window.addEventListener('offline', startCounting);
+  reset.addEventListener('click', resetCounter);
 });
 
